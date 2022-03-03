@@ -15,6 +15,7 @@ public interface Utils {
     String platform;
     String extension;
     String os = System.getProperty("os.name");
+    String arch = System.getProperty("os.arch");
     if ("linux".equalsIgnoreCase(os)) {
       platform = "linux";
       extension = ".so";
@@ -24,8 +25,9 @@ public interface Utils {
     } else {
       throw new RuntimeException("unsupportedPlatformException");
     }
-    InputStream in = Utils.class.getClassLoader().getResourceAsStream(
-        "native-package" + File.separator + platform + File.separator + name + extension);
+    String path = "native-package" + File.separator + platform + File.separator + arch +File.separator;
+    InputStream in = Utils.class.getClassLoader().getResourceAsStream(path + name + extension);
+
     File fileOut = new File(
         System.getProperty("java.io.tmpdir") + File.separator + name + extension + "." + System.currentTimeMillis());
     FileUtils.copyToFile(in, fileOut);
