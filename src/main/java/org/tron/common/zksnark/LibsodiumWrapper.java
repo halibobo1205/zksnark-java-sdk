@@ -1,17 +1,12 @@
 package org.tron.common.zksnark;
 
-import java.io.IOException;
-import org.tron.common.util.Utils;
+import org.fusesource.hawtjni.runtime.Library;
 
 public class LibsodiumWrapper {
   private static final Libsodium INSTANCE = new Libsodium();
-
+  private static final Library LIBRARY = new Library("zksnarkjni", LibsodiumWrapper.class);
   static {
-    try {
-      System.load(Utils.getLibraryByName("libzksnarkjni"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    LIBRARY.load();
   }
 
   public static Libsodium getInstance() {

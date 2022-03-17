@@ -7,33 +7,6 @@ import org.apache.commons.io.FileUtils;
 
 public interface Utils {
 
-  static String getLibraryByName(String name) throws IOException {
-    return getLibrary(name);
-  }
-
-  static String getLibrary(String name) throws IOException {
-    String platform;
-    String extension;
-    String os = System.getProperty("os.name");
-    String arch = System.getProperty("os.arch");
-    if ("linux".equalsIgnoreCase(os)) {
-      platform = "linux";
-      extension = ".so";
-    } else if ("macos".equalsIgnoreCase(os) || os.toLowerCase().contains("mac")) {
-      platform = "macos";
-      extension = ".dylib";
-    } else {
-      throw new RuntimeException("unsupportedPlatformException");
-    }
-    String path = "native-package" + File.separator + platform + File.separator + arch +File.separator;
-    InputStream in = Utils.class.getClassLoader().getResourceAsStream(path + name + extension);
-
-    File fileOut = new File(
-        System.getProperty("java.io.tmpdir") + File.separator + name + extension + "." + System.currentTimeMillis());
-    FileUtils.copyToFile(in, fileOut);
-    return fileOut.getAbsolutePath();
-  }
-
   static String getParamsFile(String fileName) {
     InputStream in = Utils.class.getClassLoader()
         .getResourceAsStream("params" + File.separator + fileName);

@@ -1,17 +1,12 @@
 package org.tron.common.zksnark;
 
-import java.io.IOException;
-import org.tron.common.util.Utils;
+import org.fusesource.hawtjni.runtime.Library;
 
 public class LibrustzcashWrapper {
   private static final Librustzcash INSTANCE = new Librustzcash();
-
+  private static final Library LIBRARY = new Library("zksnarkjni", LibrustzcashWrapper.class);
   static {
-    try {
-      System.load(Utils.getLibraryByName("libzksnarkjni"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    LIBRARY.load();
   }
 
   public static Librustzcash getInstance() {

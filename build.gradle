@@ -33,6 +33,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.fusesource.hawtjni', name: 'hawtjni-runtime', version: '1.18'
     testImplementation "junit:junit:$junitVersion"
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 }
